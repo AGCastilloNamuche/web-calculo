@@ -11,17 +11,20 @@ const i = ref() //interes
 
 const calcularAnualidad = () => {
   i.value /= 100;
+  var tiempo = parseFloat(n.value);
+  var pago = parseFloat(p.value);
+  var interes = parseFloat(i.value)
   // ANUALIDAD ANTICIPADA
   // valor presente
-  vpa.value = p.value * ((1 - Math.pow(1 + i.value, -n.value)) / i.value) * (1 + i.value);
+  vpa.value = pago * ((1 - Math.pow(1 + i.value, - tiempo)) / interes) * (1 + interes);
   // valor futuro
-  vfa.value = p.value * ((Math.pow(1 + i.value, n.value) - 1) / i.value) - 1;
+  vfa.value = pago * (((Math.pow(1 + interes, tiempo + 1) - 1) / interes) - 1);
 
   // ANUALIDAD VENCIDA
   // valor presente
-  vpv.value = p.value * (1 - Math.pow(1 + i.value, -n.value) / i.value);
+  vpv.value = pago * (1 - Math.pow(1 + interes, - tiempo) / interes);
   // valor futuro
-  vfv.value = p.value * ((Math.pow(1 + i.value, n.value) - 1) / i.value);
+  vfv.value = pago * ((Math.pow(1 + interes, tiempo) - 1) / interes);
 
 }
 

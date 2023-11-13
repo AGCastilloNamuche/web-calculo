@@ -1,4 +1,6 @@
 <script setup>
+import { watch } from 'vue'
+
 const currentTab = ref('')
 const p = ref()
 const i = ref()
@@ -9,15 +11,22 @@ const vf = ref(0)
 const cuotas = ref(0)
 
 const calcularFCS = () => {
-    i.value /= 100
-    vf.value = p.value * ((Math.pow(1 + i.value, n.value) - 1) / i.value)
-    cuotas.value = vf.value / ((Math.pow(1 + i.value, n.value) - 1) / i.value)
-    // ( (i.value * Math.pow(1 + i.value, n.value)) / (Math.pow(1 + i.value, n.value) - 1))
+    var pago = parseFloat(p.value)
+    var interes = parseFloat(i.value) / 100
+    var tiempo = parseFloat(n.value)
+
+    vf.value = pago * ((Math.pow(1 + interes, tiempo) - 1) / interes)
+    cuotas.value = vf.value / ((Math.pow(1 + interes, tiempo) - 1) / interes)
+    console.log(cuotas.value, vf.value);
+
 }
 
 const calcularFDFA = () => {
-    i.value /= 100
-    r.value = (s.value * i.value) / ((Math.pow(1 + i.value, n.value) - 1))
+    var monto = parseFloat(s.value)
+    var interes = parseFloat(i.value) / 100
+    var nPagos = parseFloat(n.value)
+
+    r.value = (monto * interes) / ((Math.pow(1 + interes, nPagos) - 1))
 }
 const limpiar = () => {
     p.value = ""
@@ -39,6 +48,9 @@ const itemsMenu = ref([
         icon: 'tabler-sort-ascending-numbers',
     },
 ])
+watch(() => {
+
+})
 </script>
 <template>
     <div>
@@ -72,7 +84,7 @@ const itemsMenu = ref([
 
                                                     <VCol cols="12">
                                                         <AppTextField v-model="p" prepend-inner-icon="tabler-number"
-                                                            label="Cuotas" placeholder="Ingrese el Cuotas" type="number" />
+                                                            label="Pago" placeholder="Ingrese el pago" type="number" />
                                                     </VCol>
 
                                                     <VCol cols="12">
